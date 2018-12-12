@@ -16,6 +16,7 @@ export default class OnboardingWhere extends React.Component {
                 </p>
                 <ProviderList
                     onChange={provider => this.setState({ provider })}
+                    provider={this.state.provider}
                 />
                 <PrimaryButton
                     disabled={!this.state.provider}

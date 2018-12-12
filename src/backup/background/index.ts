@@ -172,18 +172,18 @@ export class BackupBackgroundModule {
                 isBackupConnected: async () => {
                     return this.backend.isConnected()
                 },
-                maybeCheckAutomaticBakupEnabled: async () => {
+                maybeCheckAutomaticBackupEnabled: async () => {
                     if (
                         !!(await this.lastBackupStorage.getLastBackupTime()) &&
                         localStorage.getItem('wp.user-id') &&
                         localStorage.getItem('backup.has-subscription') &&
                         localStorage.getItem('nextBackup') === null
                     ) {
-                        await this.checkAutomaticBakupEnabled()
+                        await this.checkAutomaticBackupEnabled()
                         await this.maybeScheduleAutomaticBackup()
                     }
                 },
-                checkAutomaticBakupEnabled: async () => {
+                checkAutomaticBackupEnabled: async () => {
                     // The only place this is called right now is post-purchase.
                     // Move to more suitable place once this changes.
                     const override =
@@ -197,7 +197,7 @@ export class BackupBackgroundModule {
                             override === 'true',
                         )
                     } else {
-                        await this.checkAutomaticBakupEnabled()
+                        await this.checkAutomaticBackupEnabled()
                     }
 
                     return this.automaticBackupCheck
@@ -247,7 +247,8 @@ export class BackupBackgroundModule {
             handleLoginRedirectedBack: this.backend.handleLoginRedirectedBack.bind(
                 this.backend,
             ),
-            checkAutomaticBakupEnabled: () => this.checkAutomaticBakupEnabled(),
+            checkAutomaticBackupEnabled: () =>
+                this.checkAutomaticBackupEnabled(),
             memexCloudOrigin: _getMemexCloudOrigin(),
         })
     }
@@ -283,10 +284,10 @@ export class BackupBackgroundModule {
             return false
         }
 
-        return this.checkAutomaticBakupEnabled()
+        return this.checkAutomaticBackupEnabled()
     }
 
-    checkAutomaticBakupEnabled() {
+    checkAutomaticBackupEnabled() {
         this.automaticBackupCheck = (async () => {
             const wpUserId = localStorage.getItem('wp.user-id')
             if (!wpUserId) {

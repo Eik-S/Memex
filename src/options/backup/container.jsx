@@ -16,7 +16,7 @@ import LoadingBlocker from './components/loading-blocker'
 import Styles from './styles.css'
 
 export default class BackupSettingsContainer extends React.Component {
-    state = { screen: null, isAuthenticated: null }
+    state = { screen: null, isAuthenticated: null, provider: null }
 
     async componentDidMount() {
         const isAuthenticated = await remoteFunction('isBackupAuthenticated')()
@@ -107,10 +107,12 @@ export default class BackupSettingsContainer extends React.Component {
             return (
                 <OnboardingWhere
                     onChoice={async choice => {
+                        console.log(choice)
                         analytics.trackEvent(
                             {
                                 category: 'Backup',
                                 action: 'onboarding-where-chosen',
+                                value: choice,
                             },
                             true,
                         )
@@ -160,6 +162,7 @@ export default class BackupSettingsContainer extends React.Component {
             return (
                 <OnboardingSize
                     isAuthenticated={this.state.isAuthenticated}
+                    provider={this.state.provider}
                     onBlobPreferenceChange={saveBlobs => {
                         analytics.trackEvent(
                             {

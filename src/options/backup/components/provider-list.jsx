@@ -2,17 +2,39 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Styles from './provider-list.css'
 
-export function ProviderList({ onChange }) {
+export function ProviderList({ onChange, provider }) {
     return (
         <div>
             <p className={Styles.subTitle}>Currently Available</p>
-            <label>
-                <input type="radio" onChange={() => onChange('google-drive')} />
-                <span style={{ cursor: 'pointer' }}>
-                    <img className={Styles.logo} src={'img/google-drive.png'} />
-                    <span className={Styles.name}>Google Drive</span>
-                </span>
-            </label>
+            <form>
+                <label>
+                    <input
+                        type="radio"
+                        checked={provider === 'google-drive'}
+                        onChange={() => onChange('google-drive')}
+                    />
+                    <span style={{ cursor: 'pointer' }}>
+                        <img
+                            className={Styles.logo}
+                            src={'img/google-drive.png'}
+                        />
+                        <span className={Styles.name}>Google Drive</span>
+                    </span>
+                    <br />
+                    <input
+                        type="radio"
+                        checked={provider === 'local-hard-drive'}
+                        onChange={() => onChange('local-hard-drive')}
+                    />
+                    <span style={{ cursor: 'pointer' }}>
+                        <img
+                            className={Styles.logo}
+                            src={'img/google-drive.png'}
+                        />
+                        <span className={Styles.name}>Local Hard Drive</span>
+                    </span>
+                </label>
+            </form>
             <br />
             <p className={Styles.subTitle}>Future Options</p>
             <div className={Styles.voteContainer}>
@@ -25,9 +47,6 @@ export function ProviderList({ onChange }) {
                 </a>
                 <span>on your favorite provider</span>
             </div>
-            <input type="radio" disabled />
-            <span className={Styles.disabled}>Local Hard Drive</span>
-            <br />
             <input type="radio" disabled />
             <span className={Styles.disabled}>Own Cloud</span>
             <br />
@@ -49,4 +68,5 @@ export function ProviderList({ onChange }) {
 
 ProviderList.propTypes = {
     onChange: PropTypes.func.isRequired,
+    provider: PropTypes.string,
 }

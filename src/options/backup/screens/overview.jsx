@@ -29,7 +29,7 @@ export default class OverviewContainer extends React.Component {
 
     async componentDidMount() {
         console.log('before')
-        await remoteFunction('maybeCheckAutomaticBakupEnabled')()
+        await remoteFunction('maybeCheckAutomaticBackupEnabled')()
         const backupTimes = await remoteFunction('getBackupTimes')()
         this.setState({
             automaticBackupEnabled: await remoteFunction(

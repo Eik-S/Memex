@@ -3,7 +3,7 @@ import { browser } from 'webextension-polyfill-ts'
 export function setupRequestInterceptors({
     webRequest,
     handleLoginRedirectedBack,
-    checkAutomaticBakupEnabled,
+    checkAutomaticBackupEnabled,
     memexCloudOrigin,
 }) {
     webRequest.onBeforeRequest.addListener(
@@ -12,7 +12,7 @@ export function setupRequestInterceptors({
         ['blocking'],
     )
     webRequest.onBeforeRequest.addListener(
-        makeWooCommercePurchaseHandler({ checkAutomaticBakupEnabled }),
+        makeWooCommercePurchaseHandler({ checkAutomaticBackupEnabled }),
         { urls: ['https://worldbrain.io/order-received/thank-you/redirect/'] },
         ['blocking'],
     )
@@ -31,9 +31,11 @@ export function makeGoogleCallbackHandler({ handleLoginRedirectedBack }) {
     }
 }
 
-export function makeWooCommercePurchaseHandler({ checkAutomaticBakupEnabled }) {
+export function makeWooCommercePurchaseHandler({
+    checkAutomaticBackupEnabled,
+}) {
     return () => {
-        checkAutomaticBakupEnabled()
+        checkAutomaticBackupEnabled()
         const targetUrl = `${browser.extension.getURL('/options.html')}#/backup`
         return { redirectUrl: targetUrl }
     }

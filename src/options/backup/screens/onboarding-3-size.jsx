@@ -10,6 +10,7 @@ import Styles from '../styles.css'
 export default class OnboardingSizeContainer extends React.Component {
     static propTypes = {
         isAuthenticated: PropTypes.bool,
+        provider: PropTypes.string.isRequired,
         onBlobPreferenceChange: PropTypes.func.isRequired,
         onLoginRequested: PropTypes.func.isRequired,
         onBackupRequested: PropTypes.func.isRequired,
